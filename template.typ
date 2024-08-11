@@ -58,11 +58,11 @@
   body, class: "Example", fill: rgb("#F7FBFC"), stroke: rgb("#769FCD")
 )
 
-#let theorem(body) = note_block(
-  body, class: "Theorem", fill: rgb("#FEF2F4"), stroke: rgb("#EE6983")
-)
-
 #let definition(body) = note_block(
   body, class: "Definition", fill: rgb("#EDF1D6"), stroke: rgb("#609966")
+)
+
+#let statement(body) = note_block(
+  body, class: "Statement", fill: rgb("#FEF2F4"), stroke: rgb("#EE6983")
 )
 

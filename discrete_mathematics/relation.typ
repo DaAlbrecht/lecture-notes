@@ -75,10 +75,93 @@ or $R^{-1} = {(1, a), (1, b), (3, b), (2, c)}$.
   ```)
 ]
 
+#pagebreak()
 = Relations $R subset.eq A * A$
 
+Relations that are subsets of the Cartesian product of a set with itself are called relations on the set.
+They can have the following properties:
 
 
+#definition[Reflexive: $(a, a) in R forall a in A$.]
+#example[The relation $R = {(1, 1), (2, 2)} subset.eq A * A$ is reflexive.
+\
+#raw-render(
+  ```
+  digraph {
+    1 -> 1
+    2 -> 2
+  }
+  ```)
+]
+
+#definition[Transitive: $forall a, b, c in A, (a, b) in R and (b, c) in R arrow.r.double (a, c) in R$.]
+
+#example[The relation $R = {(1, 2), (2, 3), (1, 3)} subset.eq A * A$ is transitive.
+\
+#raw-render(
+  ```
+  digraph {
+    rankdir=LR
+    1 -> 2
+    2 -> 3
+    1 -> 3
+  }
+  ```)
+]
+
+
+#definition[Symmetric: $forall a, b in A, (a, b) in R arrow.r.double (b, a) in R$.]
+
+
+#example[The relation $R = {(1, 2), (2, 1)} subset.eq A * A$ is symmetric.
+\
+#raw-render(
+  ```
+  digraph {
+    rankdir=LR
+    1 -> 2
+    2 -> 1
+  }
+  ```)
+]
+
+#definition[Antisymmetric: $forall a, b in A, (a, b) in R and (b, a) in R arrow.r.double a = b$.
+\
+or equivalently: $forall a, b in A, (a, b) in R and a != b arrow.r.double (b, a) in.not R$.]
+
+#example[The relation $R = {(1, 2),(2, 3), (1,1)} subset.eq A * A$ is antisymmetric.
+
+#raw-render(
+  ```
+  digraph {
+    rankdir=LR
+    1 -> 2
+    2 -> 3
+    1 -> 1
+  }
+  ```)
+]
+
+#definition[Asymmetric: $forall a, b in A, (a, b) in R arrow.r.double (b, a) in.not R$.]
+
+#example[The relation $R = {(1, 2), (2, 3)} subset.eq A * A$ is asymmetric.
+\
+#raw-render(
+  ```
+  digraph {
+    rankdir=LR
+    1 -> 2
+    2 -> 3
+  }
+  ```)
+]
+
+#statement[
+A relation $R$ on a set $A$ is called an equivalence relation if it is reflexive,
+symmetric, and transitive.
+\
+For $(a, b) in R$, we say that $a$ is equivalent to $b$ and write $a equiv b$.
+]
 
 = Glossary of mathematical symbols
 
