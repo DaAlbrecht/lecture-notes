@@ -6,8 +6,12 @@
 
   set document(author: authors, title: title)
   set page(numbering: "1", number-align: center)
-  set text(font: "Berkeley Mono", lang: "en")
+  set text(font: "Berkeley Mono", lang: "en", size: 12pt)
   set heading(numbering: "1.1")
+
+  show math.equation: set text(style: "italic")
+
+
 
 [
   #set align(center)
@@ -35,17 +39,30 @@
 
   pagebreak()
 
-  // Table of contents.
-  outline(title: "Table of contents", depth: 3, indent: true)
-  pagebreak()
-  outline(title: "List of figures", target: figure.where(kind: image))
-  outline(title: "List of tables", target: figure.where(kind: table))
-  outline(title: "List of listings", target: figure.where(kind: raw))
-
-  pagebreak()
-
   // Main body.
   set par(justify: true)
   body
   pagebreak()
 }
+
+#let note_block(body, class: "Block", fill: rgb("#FFFFFF"), stroke: rgb("#000000")) = {
+  block(fill:fill,
+  width: 100%,
+  inset:8pt,
+  radius: 4pt,
+  stroke:stroke,
+  body)
+}
+
+#let example(body) = note_block(
+  body, class: "Example", fill: rgb("#F7FBFC"), stroke: rgb("#769FCD")
+)
+
+#let theorem(body) = note_block(
+  body, class: "Theorem", fill: rgb("#FEF2F4"), stroke: rgb("#EE6983")
+)
+
+#let definition(body) = note_block(
+  body, class: "Definition", fill: rgb("#EDF1D6"), stroke: rgb("#609966")
+)
+
