@@ -157,10 +157,35 @@ or equivalently: $forall a, b in A, (a, b) in R and a != b arrow.r.double (b, a)
 ]
 
 #statement[
-A relation $R$ on a set $A$ is called an equivalence relation if it is reflexive,
-symmetric, and transitive.
+A relation $R$ on a set $A$ is called an equivalence relation if it is *reflexive*,
+*symmetric*, and *transitive*.
 \
-For $(a, b) in R$, we say that $a$ is equivalent to $b$ and write $a equiv b$.
+For $(a, b) in R$, we say that $a$ is *equivalent* to $b$ and write $a equiv b$.
+]
+
+= Equivalence classes
+
+#definition[
+Given an equivalence relation $R$ on a set $A$, the equivalence class of an element $a in A$ is the set of all elements in $A$ that are equivalent to $a$.
+\
+$[a]_R = {b in A | a equiv b}$
+]
+Given the relation $R$ is an equivalence relation on the set $A$ then the following properties hold:
+
+#statement[
+1. The equivalence classes of $R$ form a partition of $A$.
+\
+2. A partition of a set $A$ is a collection of nonempty, mutually disjoint subsets of $A$ whose union is $A$.
+]
+
+
+= Order Relations
+
+#definition[
+A relation $R$ on a set $A$ is called a partial order if it is *reflexive*, *antisymmetric* 
+and *transitive*.
+\
+Often denoted by $a lt.eq b$.
 ]
 
 = Glossary of mathematical symbols
