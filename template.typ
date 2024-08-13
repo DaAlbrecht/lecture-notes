@@ -1,11 +1,11 @@
-#let project(title: "",  body) = {
+#let project(title: "", header:"", body) = {
   let authors = ("David",);
   let school = "FFHS - Fernfachhochschule Schweiz";
   let degree = "BsC in Cyber Security";
   let date = "2024";
 
   set document(author: authors, title: title)
-  set page(numbering: "1", number-align: center)
+  set page(numbering: "1", number-align: center, header: align(center, header))
   set text(font: "Berkeley Mono", lang: "en", size: 12pt)
   set heading(numbering: "1.1")
 

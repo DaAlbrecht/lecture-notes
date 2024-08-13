@@ -1,7 +1,7 @@
 #import "../template.typ": *
 #import "@preview/diagraph:0.2.5": *
 
-#show: project.with(title: "Relation")
+#show: project.with(title: "Relation", header:"Relations in Discrete Mathematics")
 
 = Cartesian product
 
