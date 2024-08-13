@@ -182,21 +182,114 @@ Given the relation $R$ is an equivalence relation on the set $A$ then the follow
 = Order Relations
 
 #definition[
-A relation $R$ on a set $A$ is called a partial order if it is *reflexive*, *antisymmetric* 
+A relation $R$ on a set $A$ is called a order(relation) if it is *reflexive*, *antisymmetric* 
 and *transitive*.
 \
 Often denoted by $a lt.eq b$.
 ]
 
-= Glossary of mathematical symbols
+For each order there also exists a strict order. A strict order is the result of removing the reflexive property from the order relation.
 
-#table(
-  columns: (auto, auto, auto),
-  inset: 10pt,
-  align: horizon,
-  table.header(
-    [*Symbol*],
-    [*Usage*],
-    [*Description*],
-  ),
-)
+== Strict order
+
+#definition[
+A relation $R$ on a set $A$ is called a strict order if it is *antisymmetric* and *transitive* and *not reflexive*.
+]
+
+#statement[
+From each order relation $R$ there exists a strict order relation $S$ such that $a R b arrow.l.r.double.long a S b and a != b$.
+From each strict order a order relation can be derived by adding the reflexive property.
+]
+
+#example[
+  $A lt.eq B$ is a order relation on the set $A$.
+  \
+  $A lt B$ is a strict order relation on the set $A$.
+]
+
+= Comparability
+
+Two elements $a$ and $b$ in a set $A$ are said to be comparable with respect to a relation $R$ if either $a R b$ or $b R a$.
+
+== Total order
+
+#definition[
+A relation $R$ on a set $A$ is called a total order if it is a order relation and for all $a, b in A$ either $a R b$ or $b R a$.
+]
+
+#statement[
+  Total means that for any elements $a$ and $b$ in $A$, they are always related (they can always be compared) with respect to $R$
+  $arrow.l.r.double.long a R b or b R a$.
+]
+
+== Partial order
+
+#definition[
+A relation $R$ on a set $A$ is called a partial order if it is a order relation and for all $a, b in A$ if $a R b$ then $b R a$.
+]
+
+= closures
+
+Closure of a relation $R$ is the smallest relation that contains $R$ and has a certain property.
+
+== Reflexive closure
+
+#definition[
+  The reflexive closure of a relation $R$ on a set $A$ is the smallest relation that contains $R$ and is reflexive.
+  \
+  A relation $R$ is reflexive if for all $a in A$, $(a, a) in R$.
+]
+
+#statement[
+  The reflexive closure of a relation $R$ is $R union {(a, a) | a in A}$.
+  \
+  Often denoted by $[R]^"refl"$.
+]
+
+#example[
+  Let $R = {(1, 2), (2, 3)} subset.eq A * A$.
+  \
+  The reflexive closure of $R$ is $R union {(1, 1), (2, 2), (3, 3)}$.
+]
+
+== Transitive closure
+
+#definition[
+  The transitive closure of a relation $R$ on a set $A$ is the smallest relation that contains $R$ and is transitive.
+  \
+  A relation $R$ is transitive if for all $a, b, c in A$, $(a, b) in R and (b, c) in R arrow.r.double (a, c) in R$.
+]
+
+#statement[
+  The transitive closure of a relation $R$ is the intersection of all transitive relations that contain $R$.
+  \
+  Often denoted by $[R]^"trans"$.
+  \
+  $[R]^"trans" = R union {(a, c) | exists b in A, (a, b) in R and (b, c) in R}$.
+]
+
+#example[
+  Let $R = {(1, 2), (2, 3)} subset.eq A * A$.
+  \
+  The transitive closure of $R$ is $R union {(1, 3)}$.
+]
+
+== Symmetric closure
+
+#definition[
+  The symmetric closure of a relation $R$ on a set $A$ is the smallest relation that contains $R$ and is symmetric.
+  \
+  A relation $R$ is symmetric if for all $a, b in A$, $(a, b) in R arrow.r.double (b, a) in R$.
+]
+
+#statement[
+  The symmetric closure of a relation $R$ is $R union {(b, a) | (a, b) in R}$.
+  \
+  Often denoted by $[R]^"sym"$.
+]
+
+#example[
+  Let $R = {(1, 2), (2, 3)} subset.eq A * A$.
+  \
+  The symmetric closure of $R$ is $R union {(2, 1), (3, 2)}$.
+]

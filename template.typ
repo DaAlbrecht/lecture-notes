@@ -55,11 +55,11 @@
 }
 
 #let example(body) = note_block(
-  body, class: "Example", fill: rgb("#F7FBFC"), stroke: rgb("#769FCD")
+  body, class: "Example", fill: rgb("#F5F5F5"), stroke: none 
 )
 
 #let definition(body) = note_block(
-  body, class: "Definition", fill: rgb("#EDF1D6"), stroke: rgb("#609966")
+  body, class: "Definition", fill: rgb("#F2F6FE"), stroke: rgb("#6983EE")
 )
 
 #let statement(body) = note_block(
