@@ -42,7 +42,6 @@
   // Main body.
   set par(justify: true)
   body
-  pagebreak()
 }
 
 #let note_block(body, class: "Block", fill: rgb("#FFFFFF"), stroke: rgb("#000000")) = {
