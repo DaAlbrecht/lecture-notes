@@ -78,6 +78,7 @@ In a star topology, all devices are connected to a central hub or switch. Data i
   - If the central hub is not redundant, it becomes a single point of failure
   - Requires more cable than other topologies
 
+#pagebreak()
 === Mesh topology
 
 In a mesh topology, each device is connected to other devices in the network. Data can take multiple paths to reach its destination, increasing reliability and fault tolerance.

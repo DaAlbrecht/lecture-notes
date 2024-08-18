@@ -6,7 +6,7 @@
 
   set document(author: authors, title: title)
   set page(numbering: "1", number-align: center, header: align(center, header))
-  set text(font: "Berkeley Mono", lang: "en", size: 12pt)
+  set text(font: "Berkeley Mono", lang: "en", size: 11pt,spacing: 80%)
   set heading(numbering: "1.1")
 
   show math.equation: set text(style: "italic")
@@ -64,4 +64,13 @@
 #let statement(body) = note_block(
   body, class: "Statement", fill: rgb("#FEF2F4"), stroke: rgb("#EE6983")
 )
+
+#let fill_alternating(x, y) = {
+  if calc.even(y) {
+     return rgb("#F5F5F5")
+  }
+  else{
+    return rgb("#FFFFFF")
+  }
+}
 
