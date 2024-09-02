@@ -22,19 +22,19 @@ impl<T> Node<T> {
 }
 
 struct SinglyLinkedList<T> {
-    head: NodeRef<T>,
+    node: NodeRef<T>,
 }
 
 impl<'a, T> SinglyLinkedList<T> {
     fn new(el: T) -> SinglyLinkedList<T> {
         SinglyLinkedList {
-            head: Some(Rc::new(RefCell::new(Node::new(el)))),
+            node: Some(Rc::new(RefCell::new(Node::new(el)))),
         }
     }
 
     fn iter(&mut self) -> NodeIter<T> {
         NodeIter {
-            next: self.head.clone(),
+            next: self.node.clone(),
         }
     }
 
