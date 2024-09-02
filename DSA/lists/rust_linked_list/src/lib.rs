@@ -2,6 +2,10 @@ use std::{cell::RefCell, rc::Rc};
 
 type NodeRef<T> = Option<Rc<RefCell<Node<T>>>>;
 
+type Result<T> = std::result::Result<T, IndexOutOfBoundError>;
+
+struct IndexOutOfBoundError;
+
 struct Node<T> {
     el: T,
     next: NodeRef<T>,
@@ -68,6 +72,47 @@ impl<'a, T> SinglyLinkedList<T> {
             node.borrow_mut().next = new_node;
         });
     }
+
+    fn insert_at_nth(&mut self, nth: usize, el: T) -> Result<()> {
+        let prev_node = self.get_nth_node(nth - 1);
+        let nth_node = self.get_nth_node(nth);
+        let new_node = Node::new_node_ref(el);
+
+        if let Some(prev_node) = prev_node {
+            new_node
+                .as_ref()
+                .expect("node just created, should always exist")
+                .clone()
+                .borrow_mut()
+                .next = nth_node.clone();
+
+            prev_node.clone().borrow_mut().next = new_node;
+
+            Ok(())
+        } else {
+            Err(IndexOutOfBoundError)
+        }
+    }
+
+    fn pop(&mut self) -> Option<T>
+    where
+        T: Copy,
+    {
+        let last_el = self
+            .iter()
+            .last()
+            .take()
+            .map(|node| node.borrow().el.clone());
+
+        let length = self.length();
+
+        let second_last_node = self.get_nth_node(length - 2);
+        second_last_node.map(|node| {
+            node.borrow_mut().next = None;
+        });
+
+        last_el
+    }
 }
 
 struct NodeIter<T> {
@@ -129,5 +174,27 @@ mod tests {
         list.append(3);
         assert_eq!(list.contains(&2), true);
         assert_eq!(list.contains(&4), false);
+    }
+
+    #[test]
+    fn test_insert_at_nth() {
+        let mut list = SinglyLinkedList::new(1);
+        list.append(2);
+        list.append(3);
+        _ = list.insert_at_nth(1, 4);
+        assert_eq!(list.get_nth_value(0), Some(1));
+        assert_eq!(list.get_nth_value(1), Some(4));
+        assert_eq!(list.get_nth_value(2), Some(2));
+        assert_eq!(list.get_nth_value(3), Some(3));
+    }
+
+    #[test]
+    fn test_pop() {
+        let mut list = SinglyLinkedList::new(1);
+        list.append(2);
+        list.append(3);
+        let popped = list.pop();
+        assert_eq!(popped, Some(3));
+        assert_eq!(list.length(), 2);
     }
 }
