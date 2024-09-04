@@ -6,6 +6,7 @@ This repository contains the work I have done and will do during my BSc in Cyber
 
 - discrete_mathematics
 - computer_networks
+- DSA (Data Structures and Algorithms)
 
 ## How to use
 
