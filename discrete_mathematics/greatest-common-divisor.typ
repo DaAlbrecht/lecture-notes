@@ -37,6 +37,7 @@ The greatest common divisor of two numbers is the largest number that divides bo
 
 In order to find the greatest common divisor of two numbers, the Euclidean Algorithm can be used.
 
+#pagebreak()
 == Euclidean Algorithm
 
 The Euclidean Algorithm is an efficient method to find the greatest common divisor of two numbers.
@@ -54,7 +55,6 @@ It is based on the fact that a common divisor of two numbers is also a divisor o
     $24 = 66 - 42 = #text(fill: blue,"3") * 22 - #text(fill: blue,"3") * 14 = #text(fill: blue,"3") * (22 - 14) = #text(fill: blue,"3") * 8$.
 ]
 
-#pagebreak()
 
 === Algorithm
 
@@ -86,6 +86,7 @@ The Euclidean algorithm works as follows:
   Such terms are called *linear combinations* of $a$ and $b$.
 ]
 
+#pagebreak()
 == Extended Euclidean Algorithm
 
 #definition[
@@ -100,7 +101,6 @@ The Extended Euclidean Algorithm calculates in addition to the greatest common d
 
   The Extended Euclidean Algorithm calculates the coefficients $x$ and $y$ such that $a * x + b * y = gcd(a, b)$.
 ]
-#pagebreak()
 
 #example[
   #table(
