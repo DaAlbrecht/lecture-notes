@@ -85,3 +85,47 @@ The Euclidean algorithm works as follows:
   Every term of the form $alpha *a + beta * b$ is a multiple of $d$ if both $a$ and $b$ are multiples of $d$.
   Such terms are called *linear combinations* of $a$ and $b$.
 ]
+
+== Extended Euclidean Algorithm
+
+#definition[
+The Extended Euclidean Algorithm calculates in addition to the greatest common divisor (gcd) of integers $a$ and $b$, also the coefficients of Bézout's identity, which are integers $x$ and $y$ such that
+#align(center)[
+    $a * x + b * y = gcd(a, b)$.
+  ]
+]
+
+#example[
+  Given the same example as before: $a = 400$, $b = 225$.
+
+  The Extended Euclidean Algorithm calculates the coefficients $x$ and $y$ such that $a * x + b * y = gcd(a, b)$.
+]
+#pagebreak()
+
+#example[
+  #table(
+    columns: (1fr),
+    align: (left),
+    stroke: none,
+    [$400 - 225$],
+    [#h(3em) $225 - #text(fill: red, "175")$],
+    [#h(5.8em) $175 - #text(fill: red,"50")$],
+    [#h(5.8em) $#text(fill: red, "125") - 50$],
+    [#h(5.8em) $#text(fill: red,"75") - 50$],
+    [#h(8.2em) $50 - #text(fill: red,"25")$],
+    [#h(8.2em) $25 - #text(fill: red,"25")$],
+  )
+
+  $gcd(400,225) = 25$.
+
+  Now the coefficients $x$ and $y$ can be calculated by working backwards:
+
+  $25 = 50 - #text(fill: red,"25")\
+      = 50 - (75 - 50) = 2 * 50 - #text(fill: red,"75")\
+      = 2 * 50 - (125 - 50) = 3 * 50 - #text(fill: red,"125")\
+      = 3 * 50 - (175 - 50) = 4 * #text(fill: red,"50") - 175\
+      = 4 * (225 - 175) - 175 = 4 * 225 - 5 * #text(fill: red,"175")\
+      = 4 * 225 - 5 * (400 - 225)\
+      = 9 * 225 - 5 * 400
+  $
+]

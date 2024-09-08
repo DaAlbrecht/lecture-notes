@@ -39,6 +39,10 @@
 
   pagebreak()
 
+  outline(title: "Table of contents", depth: 3, indent: true)
+
+  pagebreak()
+
   // Main body.
   set par(justify: true)
   body
