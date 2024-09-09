@@ -213,7 +213,7 @@ Two elements $a$ and $b$ in a set $A$ are said to be comparable with respect to 
 === Total order
 
 #definition[
-A relation $R$ on a set $A$ is called a total order if it is a order relation and for all $a, b in A$ either $a R b$ or $b R a$.
+A relation $R$ on a set $A$ is called a total order if it is a partial order and for all $a, b in A$ either $a R b$ or $b R a$.
 ]
 
 #statement[
@@ -224,7 +224,13 @@ A relation $R$ on a set $A$ is called a total order if it is a order relation an
 === Partial order
 
 #definition[
-A relation $R$ on a set $A$ is called a partial order if it is a order relation and for all $a, b in A$ if $a R b$ then $b R a$.
+A relation $R$ on a set $A$ is called a partial order if it is *reflexive*,
+*antisymmetric* and *transitive*.
+]
+
+#statement[
+  Partial means that for any elements $a$ and $b$ in $A$, they are not always related (they can not always be compared) with respect to $R$
+  $arrow.l.r.double.long a R b or b R a$.
 ]
 
 == closures
