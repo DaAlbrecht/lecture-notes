@@ -1,6 +1,18 @@
 #import "../template.typ": *
+{
+  #set table(
+    fill: (x, y) =>
+      if x == 0 or y == 0 {
+        gray.lighten(40%)
+      },
+    align: right,
+  )
 
-= IPv4
+  #show table.cell.where(x: 0): strong
+  #show table.cell.where(y: 0): strong
+}
+
+= IPv4 (Internet Protocol version 4)
 
 An Internet Protocol address (IP address) is a numerical *32-bit* label such as 196.168.1.1 that is assigned to a device connected to a computer network that uses the Internet Protocol.
 

@@ -1,4 +1,16 @@
 #import "../template.typ": *
+{
+  #set table(
+    fill: (x, y) =>
+      if x == 0 or y == 0 {
+        gray.lighten(40%)
+      },
+    align: right,
+  )
+
+  #show table.cell.where(x: 0): strong
+  #show table.cell.where(y: 0): strong
+}
 
  = ICMP (Internet Control Message Protocol)
 
@@ -89,3 +101,101 @@ NAT can be implemented in various ways, each with its own characteristics and us
 )
 
 #pagebreak()
+
+== DHCP (Dynamic Host Configuration Protocol)
+
+The Dynamic Host Configuration Protocol (DHCP) automates the assignment of IP addresses and network parameters to hosts within a network, which is especially helpful for large-scale networks.
+Rather than manually configuring IP settings for each device, DHCP allows a DHCP server to dynamically allocate IP addresses, subnet masks, DNS server addresses, routers, and other parameters to clients (DHCP clients) during their boot process.
+
+DHCP evolved from the BOOTP protocol and is backward compatible with it.
+It supports both automatic and dynamic IP address assignments, where dynamic assignments require periodic renewal by the client.
+Servers maintain records of allocated and available IP addresses.
+DHCP can also assign fixed IP addresses to specific clients via server configuration.
+
+The process is entirely automatic, eliminating the need for manual configuration, and helps simplify network management, particularly in environments with many devices.
+
+DHCP messages are encapsulated within UDP packets, which are in turn encapsulated within IP packets.
+
+#pagebreak()
+
+== DHCP Frame Structure
+
+DHCP messages consist of a fixed-size header and a variable-length options field.
+
+- *Op*: Specifies the message type (e.g., request, reply).
+- *Htype*: Specifies the hardware address type (e.g., Ethernet).
+- *Hlen*: Specifies the hardware address length.
+- *Hops*: Used by relay agents to forward messages.
+- *Xid*: Transaction ID to match requests and replies.
+- *Secs*: Time elapsed since the client began the DHCP process.
+- *Flags*: Flags field.
+- *Ciaddr*: Client IP address.
+- *Yiaddr*: Your IP address (server).
+- *Siaddr*: Server IP address.
+- *Giaddr*: Gateway IP address.
+- *Chaddr*: Client hardware address.
+- *Sname*: Server name.
+- *File*: Boot file name.
+- *Options*: Variable-length field containing DHCP options.
+
+#figure(
+  image("../resources/dhcp_header.png", width: 120%),
+  caption: [DHCP header structure],
+) <dhcpheader>
+
+#pagebreak()
+
+== DHCP Message Types
+
+DHCP messages can be classified into the following types and passed as the *Op* field in the DHCP header:
+
+#table(
+  columns: (1fr,1fr,3fr),
+  align: (center+horizon,center+horizon,left),
+  table.header([Value], [Message Type], [Description]),
+  [1],[DHCPDISCOVER],[Broadcast message from the client to discover DHCP servers on the network.],
+  [2],[DHCPOFFER],[Unicast message from the server to offer IP address and configuration parameters to the client.],
+  [3],[DHCPREQUEST],[Broadcast message from the client to request offered parameters from a specific server.],
+  [4],[DHCPDECLINE],[Broadcast message from the client to decline the offered parameters.],
+  [5],[DHCPACK],[Unicast message from the server to acknowledge the client's request and provide configuration parameters.],
+  [6],[DHCPNAK],[Unicast message from the server to indicate that the client's requested parameters are not available.],
+  [7],[DHCPRELEASE],[Broadcast message from the client to release the assigned IP address.],
+  [8],[DHCPINFORM],[Unicast message from the client to request additional configuration parameters.],
+)
+
+== Sequence of DHCP Message Exchange
+
+The DHCP process involves a series of messages exchanged between the client and server to allocate an IP address and other network parameters.
+
+#figure(
+  image("../resources/DHCP_session.svg.png", width: 30%),
+  caption: [DHCP message exchange sequence],
+) <dhcpsequence>
+
+#pagebreak()
+
+= Security Considerations
+
+== ICMP Attack vectors
+
+ICMP can be used for various attacks, such as ICMP flood attacks, ping of death, and ICMP redirect attacks.
+
+- *ICMP flood*: Overwhelms a target with ICMP echo requests, consuming network resources and causing a denial of service.
+- *Ping of death*: Sends oversized ICMP packets to crash the target system.
+- *ICMP redirect*: Redirects traffic to a malicious host, allowing attackers to intercept and manipulate data.
+
+Preventing ICMP attacks involves filtering ICMP traffic, disabling ICMP echo requests, and implementing intrusion detection systems to detect and block malicious ICMP traffic.
+
+== ARP Attack vectors
+
+ARP spoofing used to be a common attack vector.
+It involves sending forged ARP messages to associate an attacker's MAC address with the IP address of a legitimate host, allowing the attacker to act as a man in the middle and intercept traffic intended for the legitimate host.
+
+Preventing ARP attacks involves using static ARP entries, implementing ARP spoofing detection tools, and securing network devices to prevent unauthorized access.
+
+== DHCP Attack vectors
+
+- *DHCP starvation*: Exhausts available IP addresses by sending a large number of DHCP requests, preventing legitimate clients from obtaining IP addresses.
+- *DHCP spoofing*: Impersonates a DHCP server to provide false IP addresses and network parameters to clients, allowing attackers to intercept and manipulate network traffic.
+
+Preventing DHCP attacks involves using DHCP snooping, port security, and DHCP authentication mechanisms to verify the legitimacy of DHCP servers and clients.

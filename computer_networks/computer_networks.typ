@@ -9,3 +9,5 @@
 #include "./ipv4.typ"
 #pagebreak()
 #include "./ip_protocols.typ"
+#pagebreak()
+#include "./ipv6.typ"

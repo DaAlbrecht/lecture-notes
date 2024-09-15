@@ -12,19 +12,6 @@
 
   show math.equation: set text(style: "italic")
 
-  set table(
-    fill: (x, y) =>
-      if x == 0 or y == 0 {
-        gray.lighten(40%)
-      },
-    align: right,
-  )
-
-  show table.cell.where(x: 0): strong
-  show table.cell.where(y: 0): strong
-
-
-
 [
   #set align(center)
   #text(school)
