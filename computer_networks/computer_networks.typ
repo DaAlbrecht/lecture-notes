@@ -6,6 +6,8 @@
 #pagebreak()
 #include "./protocols_protocol_layers.typ"
 #pagebreak()
+#include "./network_layer.typ"
+#pagebreak()
 #include "./ipv4.typ"
 #pagebreak()
 #include "./ip_protocols.typ"

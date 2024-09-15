@@ -1,16 +1,14 @@
 #import "../template.typ": *
-{
-  #set table(
-    fill: (x, y) =>
-      if x == 0 or y == 0 {
-        gray.lighten(40%)
-      },
-    align: right,
-  )
+#set table(
+  fill: (x, y) =>
+    if x == 0 or y == 0 {
+      gray.lighten(40%)
+    },
+  align: right,
+)
 
-  #show table.cell.where(x: 0): strong
-  #show table.cell.where(y: 0): strong
-}
+#show table.cell.where(x: 0): strong
+#show table.cell.where(y: 0): strong
 
 = IPv4 (Internet Protocol version 4)
 
