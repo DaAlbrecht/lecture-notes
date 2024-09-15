@@ -6,10 +6,22 @@
 
   set document(author: authors, title: title)
   set page(numbering: "1", number-align: center, header: align(center, header))
-  set text(font: "Berkeley Mono", lang: "en", size: 11pt,spacing: 80%)
+  set text(font: "Berkeley Mono", size: 11pt,spacing: 80%)
+  show raw: set text(font: "Berkeley Mono", size: 11pt, spacing: 100%)
   set heading(numbering: "1.1")
 
   show math.equation: set text(style: "italic")
+
+  set table(
+    fill: (x, y) =>
+      if x == 0 or y == 0 {
+        gray.lighten(40%)
+      },
+    align: right,
+  )
+
+  show table.cell.where(x: 0): strong
+  show table.cell.where(y: 0): strong
 
 
 
