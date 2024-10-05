@@ -182,5 +182,99 @@ In a directed graph, the edges have a direction. An edge $e = brace.l a, b brace
 
 == Representation of Graphs in Computers
 
+=== Matrix Representation
+
 Graphs can be represented in computers in different ways. One common representation is the *adjacency matrix*.
 
+#definition[
+  The *adjacency matrix* of a graph $G = (V, E)$ is a matrix $A$ of size $|V| times |V|$ 
+  where $ A_(i j) = 1$ if there is an edge between vertices $v_i$ and $v_j$, and $0$ otherwise.
+]
+
+#example[
+  The adjacency matrix of the graph $G = (V, E)$ with $V = brace.l a, b, c brace.r$ and $E = brace.l brace.l a, b brace.r, brace.l b, c brace.r, brace.l c, a brace.r brace.r$ is:
+  $
+  #raw-render(
+    ```
+    graph {
+      rankdir=LR
+      a -- b
+      b -- c
+      c -- a
+    }
+    ```
+  )
+  mat(
+    0 , 1 , 1;
+    1 , 0 , 1;
+    1 , 1 , 0;
+  )
+  $
+]
+
+#definition[
+  The *Incidence Matrix* of a graph $G = (V, E)$ is a matrix $A$ of size $|V| times |E|$ 
+  where $ A_(i j) = 1$ if vertex $v_i$ is incident to edge $e_j$, and $0$ otherwise.
+]
+
+#example[
+  The incidence matrix of the graph $G = (V, E)$ with $V = brace.l a, b, c brace.r$ and $E = brace.l brace.l a, b brace.r, brace.l b, c brace.r, brace.l c, a brace.r brace.r$ is:
+  $
+  #raw-render(
+    ```
+    graph {
+      rankdir=LR
+      a -- b
+      b -- c
+      c -- a
+    }
+    ```
+  )
+  mat(
+    1 , 0 , 1;
+    1 , 1 , 0;
+    0 , 1 , 1;
+  )
+  $
+]
+
+#pagebreak()
+
+=== List Representation
+
+Another common representation is the *adjacency list*.
+
+#definition[
+  The *adjacency list* of a graph $G = (V, E)$ is a list of size $|V|$ where each element $A[i]$ is a list of vertices adjacent to vertex $v_i$.
+]
+
+#example[
+  The adjacency list of the graph $G = (V, E)$ with $V = brace.l a, b, c brace.r$ and $E = brace.l brace.l a, b brace.r, brace.l b, c brace.r, brace.l c, a brace.r brace.r$ is:
+  #raw-render(
+    ```
+    graph {
+      rankdir=LR
+      a -- b
+      b -- c
+      c -- a
+    }
+    ```
+  )
+
+  #table(
+    columns: 2,
+    align: (center,left),
+    stroke: none,
+    table.header(
+      [Vertex], [Adjacent Vertices]
+    ),
+    table.hline(start: 0),
+    table.vline(x: 1),
+    [a], [b, c],
+    [b], [a, c],
+    [c], [a, b],
+  )
+]
+
+The adjacency list representation is more space-efficient than the adjacency matrix representation for sparse graphs,
+because the number of elements in an adjacency list is twice the number of edges, while the number of elements in an adjacency matrix is $|V|^2$.
