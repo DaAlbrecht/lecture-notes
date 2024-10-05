@@ -192,6 +192,8 @@ Neutral and inverse elements can also be defined in modular arithmetic.
   therefore, division is only possible for the elements $1, 5$ in the ring of integers modulo $6$.
 ]
 
+#pagebreak()
+
 In order to find a ring of integers modulo $m$ where division is possible for all elements, $m$ must be a prime number.
 
 #example[
@@ -210,8 +212,6 @@ In order to find a ring of integers modulo $m$ where division is possible for al
   )]
   )
 ]
-
-#pagebreak()
 
 For smaller numbers, its easy to find the inverse element by trial and error or by writing out the multiplication table.
 For larger numbers, the Extended Euclidean Algorithm can be used to find the inverse element.

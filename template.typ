@@ -47,13 +47,36 @@
   body
 }
 
+#let classes = ("Definition", "Example", "Statement")
+#let h1_marker = counter("h1")
+#let h2_marker = counter("h2")
+
 #let note_block(body, class: "Block", fill: rgb("#FFFFFF"), stroke: rgb("#000000")) = {
-  block(fill:fill,
-  width: 100%,
-  inset:8pt,
-  radius: 4pt,
-  stroke:stroke,
-  body)
+  let block_counter = counter(class)
+
+  locate(loc => {
+    // Returns the serial number of the current block
+    // The format is just like "Definition 1.3.1"
+    let serial_num = (
+    h1_marker.at(loc).last(),
+    h2_marker.at(loc).last(),
+    block_counter.at(loc).last() + 1)
+    .map(str)
+    .join(".")
+
+    let serial_label = label(class + " " + serial_num)
+        
+
+    block(fill:fill,
+    width: 100%,
+    inset:8pt,
+    radius: 4pt,
+    stroke:stroke,
+    body)
+    v(-8pt)
+    text(10pt, weight: "bold")[#class #serial_num #serial_label #block_counter.step()]
+    v(2pt)
+  })
 }
 
 #let example(body) = note_block(
