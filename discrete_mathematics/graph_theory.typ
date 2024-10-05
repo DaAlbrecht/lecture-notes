@@ -541,3 +541,205 @@ Fleury's algorithm is an algorithm used to find an Eulerian cycle in a graph.
 #statement[
   In a graph with $n$ vertices, a Hamiltonian cycle must exists if a minimum of $1/2(n-1)(n-2)+2$ edges are present.
 ]
+
+#pagebreak()
+
+= Trees
+
+#definition[
+  A *tree* is a connected graph with no cycles.
+]
+
+#example[
+  The graph $G = (V, E)$ with $V = brace.l a, b, c, d brace.r$ and $E = brace.l a b, a d, a c brace.r$ is a tree.
+  #raw-render(
+  ```
+  graph {
+    rankdir=LR
+    a -- b
+    a -- d
+    a -- c
+  }
+  ```
+  )
+
+  The graph $H = (V, E)$ with $V = brace.l a, b, c, d brace.r$ and $E = brace.l a b, a d, a c, b d brace.r$ is not a tree because it contains a cycle.
+
+  #raw-render(
+  ```
+  graph {
+    rankdir=LR
+    a -- b [color=red]
+    a -- d [color=red]
+    a -- c
+    b -- d [color=red]
+  }
+  ```
+)
+]
+
+#definition[
+  If all connected components of a graph are trees, the graph is called a *forest*.
+]
+
+#statement[
+  A connected graph $G$ with $n$ vertices is a tree if and only if:
+  - $G$ has $n-1$ edges.
+  - If one edge is removed from $G$, it becomes disconnected.
+  - Between any two vertices in $G$, there is exactly one path.
+]
+
+#pagebreak()
+
+#definition[
+  A *spanning tree* of a graph $G$ is a subgraph that is a tree and contains all vertices of $G$.
+]
+
+#example[
+  The graph $G = (V, E)$ with $V = brace.l a, b, c, d, e, f brace.r$ and $E = brace.l a b, a d, a c, b d, f a, f b brace.r$
+  has a spanning tree $T = (V, E')$ with $V = brace.l a, b, c, d, e, f brace.r$ and $E' = brace.l  a d, a c, f a, f b brace.r$.
+
+  $G$:
+  #raw-render(
+  ```
+  graph {
+    rankdir=LR
+    a -- b
+    a -- d
+    a -- c
+    b -- d
+    f -- a
+    f -- b
+  }
+  ```
+)
+
+  $T$:
+  #raw-render(
+  ```
+  graph {
+    rankdir=LR
+    a -- d
+    a -- c
+    f -- a
+    f -- b
+  }
+  ```
+)
+]
+
+== Naming
+
+#table(
+  columns: (auto,1.5fr,1.5fr),
+  align: (center,left,left),
+  table.header(
+    [Term], [Definition], [Example]
+  ),
+  [root], [A vertex with no incoming edges], [#render("graph { a -- b a -- c }") $a$ is the root],
+  [leaf], [A vertex with no outgoing edges], [#render("graph { a -- b b -- c }") $c$ is a leaf],
+  [level], [The distance from the root], [#render("graph { a -- b a -- c b -- d }") $a$ is level $0$, $b$ is level $1$, $c$ is level $1$, $d$ is level $2$],
+  [parent], [A vertex $v$ is the parent of vertex $u$ if there is an edge $v-u$], [#render("graph { a -- b a -- c b -- d }") $a$ is the parent of $b$],
+  [child], [A vertex $u$ is a child of vertex $v$ if there is an edge $v-u$], [#render("graph { a -- b a -- c b -- d }") $b$ is a child of $a$],
+  [sibling], [Two vertices that share the same parent], [#render("graph { a -- b a -- c b -- d c -- d }") $b$ and $c$ are siblings],
+  [ancestor], [A vertex $v$ is an ancestor of vertex $u$ if there is a path from $v$ to $u$], [#render("graph { a -- b a -- c b -- d }") $a$ is an ancestor of $d$],
+  [descendant], [A vertex $u$ is a descendant of vertex $v$ if there is a path from $v$ to $u$], [#render("graph { a -- b a -- c b -- d }") $d$ is a descendant of $a$],
+  [binary tree], [A tree where each vertex has at most two children], [#render("graph { a -- b a -- c b -- d }")],
+)
+#pagebreak()
+
+== Binary Search Trees
+
+#definition[
+  A *binary search tree* (BST) is a binary tree where each vertex has at most two children, and the left child of a vertex contains a value less than the vertex, while the right child contains a value greater than the vertex.
+]
+
+
+#example[
+  The following binary tree is a binary search tree:
+  #raw-render(
+  ```
+  graph {
+      8 -- 3
+      8 -- 10
+      3 -- 1
+      3 -- 6
+      6 -- 4
+      6 -- 7
+      10 -- 14
+      14 -- 13
+  }
+  ```
+)
+]
+
+=== Operations
+
+#definition[
+  *Search*: To find a value in a binary search tree, start at the root and compare the value with the current vertex. If the value is less than the current vertex, move to the left child. If it is greater, move to the right child. Repeat this process until the value is found or corresponding subtree is empty, then the value is not in the tree.
+
+  *Insert*: To insert a value into a binary search tree, search for the value. If the value is not found, insert it as a leaf at the position where the search ended.
+
+  *Delete*: To delete a value from a binary search tree, search for the value. If the value is found:
+    - If the vertex has no children, remove the vertex.
+    - If the vertex has one child, replace the vertex with its child.
+    - If the vertex has two children, replace the vertex with the smallest value in the right subtree.
+]
+
+#statement[
+  The maximum amount of comparisons needed to search for a value in a binary search tree with length $n$ is $n + 1$.
+]
+
+The time complexity of searching, inserting, and deleting in a binary search tree is $O(h)$, where $h$ is the height of the tree.
+This makes it crucial to ensure the height is minimized. The height of a tree is highly dependent on the order of insertion and deletion operations.
+
+#example[
+  A Binary Search Tree with the values $brace.l 4, 8, 9, 14, 16, 20, 25, 31 brace.r$:
+
+  worst case height: 7
+  #raw-render(
+  ```
+  graph {
+    rankdir=LR
+    4 -- 8
+    8 -- 9
+    9 -- 14
+    14 -- 16
+    16 -- 20
+    20 -- 25
+    25 -- 31
+  }
+  ```,
+  width: 100%
+)
+
+compact height: 3
+  #raw-render(
+  ```
+  graph {
+    rankdir=TD
+    14 -- 8
+    8 -- 4
+    8 -- 9
+    14 -- 20
+    20 -- 16
+    20 -- 25
+    25 -- 31
+  }
+  ```,
+)
+]
+
+One method to try to minimize the height of a binary search tree is a *devided and conquer* approach. This approach involves inserting the median value of the list as the root, then recursively inserting the median value of the left and right sublists as the left and right children of the root.
+
+#pagebreak()
+
+#statement[
+  In a binary search tree with length $l$, is the maximum data that can be stored:
+  $
+  n = sum_(k=0)^(l) 2^k = 2^(l+1) - 1
+  $
+  Resulting in a search time of $O(log_2(n))$.
+]
+
+
