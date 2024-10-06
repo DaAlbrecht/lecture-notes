@@ -742,4 +742,149 @@ One method to try to minimize the height of a binary search tree is a *devided a
   Resulting in a search time of $O(log_2(n))$.
 ]
 
+= Weighted Graphs
 
+#definition[
+  A *weighted graph* is a graph $G = (V, E)$ where each edge $e = brace.l a, b brace.r$ has a weight $w(e) gt.eq 0$.
+]
+
+#example[
+  The graph $G = (V, E)$ with $V = brace.l a, b, c brace.r$ and $E = brace.l brace.l a, b brace.r, brace.l b, c brace.r brace.r$ has the weights $w(brace.l a, b brace.r) = 3$ and $w(brace.l b, c brace.r) = 2$.
+  #raw-render(
+  ```
+  graph {
+    rankdir=LR
+    a -- b [label="3"]
+    b -- c [label="2"]
+  }
+  ```
+)
+
+  or as an adjacency matrix:
+  $
+  mat(
+    0 , 3 , 0;
+    3 , 0 , 2;
+    0 , 2 , 0;
+  )
+  $
+]
+
+#definition[
+  A *complete graph* is a graph where every pair of vertices is connected by a distinct edge.
+  A complete graph with $n$ vertices has $n(n-1)/2$ edges and is denoted as $K_n$.
+]
+
+== Traveling Salesman Problem
+
+The Traveling Salesman Problem (TSP) is a problem where a salesman must visit all cities in a list exactly once and return to the starting city. The goal is to find the shortest path that visits all cities.
+
+#example[
+  Given the following weighted graph $G = (V, E)$ with $V = brace.l a, b, c brace.r$ and $E = brace.l brace.l a, b brace.r, brace.l b, c brace.r, brace.l a, c brace.r brace.r$:
+
+  #raw-render(
+  ```
+  graph {
+    rankdir=LR
+    a -- b [label="3"]
+    b -- c [label="2"]
+    a -- c [label="1"]
+  }
+  ```
+)
+
+  The shortest path that visits all cities is $a, c, b$ with a total weight of $3$.
+]
+
+#statement[
+  The Traveling Salesman Problem is NP-hard, meaning that there is no known polynomial-time algorithm to solve it.
+]
+
+= Minimum Spanning Trees
+
+#definition[
+  A *minimum spanning tree* (MST) of a weighted graph $G = (V, E)$ is a spanning tree with the smallest possible sum of edge weights.
+]
+
+== Kruskal's Algorithm
+
+Kruskal's algorithm is an algorithm used to find the minimum spanning tree of a graph.
+
+*Algorithm:*
+
+1. Sort all edges by weight.
+2. Start with an empty graph $T$.
+3. For each edge $e$ in the sorted list:
+  - If adding $e$ to $T$ does not create a cycle (i.e., the endpoints of $e$ are not already connected in $T$), add $e$ to $T$.
+4. Repeat step 3 until $T$ has $|V| - 1$ edges.
+
+#pagebreak()
+
+#example[
+  Given the following weighted graph:
+
+  #raw-render(
+  ```
+  graph {
+    rankdir=LR
+    a -- b [label="3"]
+    b -- c [label="2"]
+    a -- c [label="1"]
+    a -- d [label="4"]
+    c -- d [label="5"]
+  }
+  ```
+)
+
+1. sorted edges: $brace.l brace.l a, c brace.r, brace.l b, c brace.r, brace.l a, b brace.r, brace.l a, d brace.r, brace.l c, d brace.r brace.r$
+
+2. start with an empty graph $T$:
+
+  #raw-render(
+  ```
+  graph {
+    rankdir=LR
+  }
+  ```
+)
+
+3. add $brace.l a, c brace.r$ to $T$:
+
+  #raw-render(
+  ```
+  graph {
+    rankdir=LR
+    a -- c [label="1"]
+  }
+  ```
+)
+
+4. add $brace.l b, c brace.r$ to $T$:
+
+  #raw-render(
+  ```
+  graph {
+    rankdir=LR
+    a -- c [label="1"]
+    b -- c [label="2"]
+  }
+  ```
+)
+
+do *not* add $brace.l a, b brace.r$ to $T$ because it would create a cycle
+
+5. add $brace.l a, d brace.r$ to $T$:
+
+  #raw-render(
+  ```
+  graph {
+    rankdir=LR
+    a -- c [label="1"]
+    b -- c [label="2"]
+    a -- d [label="4"]
+  }
+  ```
+)
+
+The minimum spanning tree is $brace.l brace.l a, c brace.r, brace.l b, c brace.r, brace.l a, d brace.r brace.r$. The total weight is $7$.
+]
