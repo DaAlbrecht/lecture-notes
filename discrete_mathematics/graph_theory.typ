@@ -888,3 +888,17 @@ do *not* add $brace.l a, b brace.r$ to $T$ because it would create a cycle
 
 The minimum spanning tree is $brace.l brace.l a, c brace.r, brace.l b, c brace.r, brace.l a, d brace.r brace.r$. The total weight is $7$.
 ]
+
+== Dijkstra's Algorithm
+
+Dijkstra's algorithm is an algorithm used to find the shortest path in a weighted graph $G = (V, E)$ between a source vertex $s$ and any other destination vertex $v$.
+
+*Algorithm:*
+
+1. Start at the source vertex $s$.
+2. Set the distance to $s$ as $0$ and all other distances as $infinity$.
+3. While there are unvisited vertices:
+  - Take the unvisited vertex $u$ with the smallest distance.
+  - For each neighbor $v$ of $u$:
+    - If the distance to $u$ plus the weight of the edge $u-v$ is smaller than the current distance to $v$, update the distance to $v$.
+4. Repeat step 3 until all vertices are visited.
