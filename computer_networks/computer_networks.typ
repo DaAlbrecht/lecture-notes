@@ -13,3 +13,5 @@
 #include "./ip_protocols.typ"
 #pagebreak()
 #include "./ipv6.typ"
+#pagebreak()
+#include "./routing.typ"
