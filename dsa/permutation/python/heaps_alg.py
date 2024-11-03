@@ -9,11 +9,9 @@ def permutations(n: int) -> List[List[int]]:
     return perms
 
 def generate(k: int, A: List[int], perms: List[List[int]]):
-    if k == 0:
+    if k <= 1:
         perms.append(A.copy())
         return
-    if k == 1:
-        perms.append(A.copy())
     else:
         generate(k - 1, A, perms)
         for i in range(k - 1): 
