@@ -28,6 +28,7 @@ Partial functions can be denoted as:
   The partial function $f: RR harpoon.rt RR, x arrow.r.bar 1/x$ is not defined for $x = 0$.
 ]
 
+#pagebreak()
 === Register Machine
 
 A register machine is a theoretical model of computation that consists of a set of registers and a set of instructions that operate on these registers.
@@ -59,6 +60,7 @@ A program for a register machine consists of a sequence of instructions that spe
     [*PUSH r c*], [Appends the character c ∈ Γ to register Rr.]
 )
 
+#pagebreak()
 === Turing Machine
 
 A Turing machine is a theoretical model of computation that consists of an infinite tape divided into cells, a read/write head that moves along the tape, and a finite set of states.
@@ -73,9 +75,54 @@ A formal definition of a Turing machine consists of a 7-tuple $M = (Q, Gamma, b,
 - $F subset.eq Q$ is the set of final states.
 
 
+#example[
+  Given an input string of 0s and 1s, a Turing machine can be designed to check if the number of 1s is even.
+
+  Given the input string $10101$, we could define the following turning machine:
+
+  #table(
+    columns: 5,
+    table.header([*Current State*],[*Read Symbol*],[*Write Symbol*],[*Move*], [*Next State*]),
+    [start], [0], [0], [R], [start],
+    [start], [1], [1], [R], [Odd],
+    [Odd], [0], [0], [R], [Odd],
+    [Odd], [1], [1], [R], [Even],
+    [Even], [0], [0], [R], [Even],
+    [Even], [1], [1], [R], [Odd],
+    [Even], [Blank], [Blank], [Stay], [Accept],
+    [Odd], [Blank], [Blank], [Stay], [Reject],
+  )
+
+  Where:
+  #table(
+  [$Q = {"start, Odd, Even, Accept, Reject"}$],
+  [$Gamma = {0, 1, "Blank"}$],
+  [$Sigma = {0, 1}$],
+  [$b = "Blank"$],
+  [$delta$ is the transition function as defined in the table above],
+  [$q_0 = "start"$],
+  [$F = {"Accept", "Reject"}$]
+  )
+]
+
+
 == P and NP
 
 The classes P and NP are fundamental complexity classes in computational complexity theory.
+
+=== Polynomial Time
+
+A polynomial time algorithm is an algorithm that runs in polynomial time with respect to the size of the input.
+
+A polynomial time algorithm is said to run in polynomial time if there exists a polynomial $p(n)$ such that the algorithm runs in $O(p(n))$ time, where $n$ is the size of the input.
+
+#statement[
+  An algorithm runs in polynomial time if there exists a polynomial $p(n)$ such that the algorithm runs in $O(p(n))$ time.
+]
+
+#example[
+  An algorithm that runs in $O(n^2)$ time is said to run in polynomial time.
+]
 
 === P
 
@@ -92,6 +139,10 @@ A decision problem is in P if there exists an algorithm that solves it in polyno
   "Given $n$ Keys and $n$ Locks, find out which key fits which lock."
 
   This problem can be solved in $O(n^2)$ time by trying all possible combinations.
+]
+
+#statement[
+  All problems in P also belong to the class NP.
 ]
 
 === NP
