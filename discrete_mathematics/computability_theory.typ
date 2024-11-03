@@ -57,7 +57,6 @@ A program for a register machine consists of a sequence of instructions that spe
       Same as the SWITCH command, but additionally removes the last character 
       from register Rr, if present.
     ],
-    [*PUSH r c*], [Appends the character c ∈ Γ to register Rr.]
 )
 
 #pagebreak()
@@ -105,6 +104,7 @@ A formal definition of a Turing machine consists of a 7-tuple $M = (Q, Gamma, b,
   )
 ]
 
+#pagebreak()
 
 == P and NP
 
@@ -144,6 +144,8 @@ A decision problem is in P if there exists an algorithm that solves it in polyno
 #statement[
   All problems in P also belong to the class NP.
 ]
+
+#pagebreak()
 
 === NP
 

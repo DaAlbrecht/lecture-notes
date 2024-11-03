@@ -19,3 +19,7 @@
 #pagebreak()
 
 #include "./graph_theory.typ"
+
+#pagebreak()
+
+#include "./computability_theory.typ"
