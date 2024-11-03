@@ -9,6 +9,7 @@ Additionally, out of fun, I tried to implement the same structure or algorithm i
 #### Disclaimer
 
 All the Python comments are translated using chatGPT from German to English.
+Additionally, some of the python solutions used chatGPT to do some work that i didn't want to do myself.
 
 ## Data Structures
 
