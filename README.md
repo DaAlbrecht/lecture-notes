@@ -12,9 +12,13 @@ This repository contains the work I have done and will do during my BSc in Cyber
 
 After finish a module i will create a pdf print with all the content of the module located in the `prints` directory.
 
+## Sources
+
+Most of the content is either from FFHS, Wikipedia or literature that is mentioned in the module.
+
 ## License
 
-This project and its text based content  is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project and its text based content is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 Most of the images used are from the [Wikimedia Commons](https://commons.wikimedia.org/) and are under the [Creative Commons Attribution-Share Alike 3.0 Unported](https://creativecommons.org/licenses/by-sa/3.0/deed.en) license.
 
