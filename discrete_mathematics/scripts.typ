@@ -166,6 +166,59 @@ def create_truth_table(expression, variables):
 ```
 #pagebreak()
 
+=== KNF and DNF
+
+```py
+import itertools
+
+def truth_table(variables, func):
+    """Generates a truth table for the given Boolean function."""
+    n = len(variables)
+    table = []
+    for values in itertools.product([0, 1], repeat=n):
+        table.append((*values, func(*values)))
+    return table
+
+def get_dnf(variables, table):
+    """Generates the Disjunctive Normal Form (DNF)."""
+    terms = []
+    for row in table:
+        if row[-1] == 1:  # Include rows where the function is True
+            term = " ∧ ".join(f"{var}" if val else f"¬{var}" for var, val in zip(variables, row[:-1]))
+            terms.append(f"({term})")
+    return " ∨ ".join(terms) if terms else "False"
+
+def get_cnf(variables, table):
+    """Generates the Conjunctive Normal Form (CNF)."""
+    terms = []
+    for row in table:
+        if row[-1] == 0:  # Include rows where the function is False
+            term = " ∨ ".join(f"¬{var}" if val else f"{var}" for var, val in zip(variables, row[:-1]))
+            terms.append(f"({term})")
+    return " ∧ ".join(terms) if terms else "True"
+
+def boolean_normal_forms(variables, func):
+    """Generates both DNF and CNF from a Boolean function."""
+    table = truth_table(variables, func)
+    dnf = get_dnf(variables, table)
+    cnf = get_cnf(variables, table)
+    
+    print("Truth Table:")
+    for row in table:
+        print(row)
+    
+    print("\nDisjunctive Normal Form (DNF):", dnf)
+    print("Conjunctive Normal Form (CNF):", cnf)
+
+# Example usage
+variables = ["A", "B", "C"]
+def example_func(A, B, C):
+    return (A and not B) or C
+
+boolean_normal_forms(variables, example_func)
+```
+#pagebreak()
+
 == Modular arithmetic
 
 === additive inverse
