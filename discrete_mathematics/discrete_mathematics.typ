@@ -23,3 +23,7 @@
 #pagebreak()
 
 #include "./computability_theory.typ"
+
+#pagebreak()
+
+#include "./scripts.typ"
