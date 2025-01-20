@@ -53,6 +53,7 @@ pub struct Vec<T> {
 === Linked list
 
 Python implementation of a linked list
+
 ```py
 from typing import Optional
 
@@ -260,7 +261,7 @@ class LinkedList:
 
 == Queue
 
-=== Queue with a linked list
+=== Queue (linked list)
 
 ```py
 from typing import Optional
@@ -322,4 +323,37 @@ class Queue:
             return self.tail.value
 ```
 
-=== Queue with an array
+=== Circular Queue
+
+```py
+class Queue:
+    def __init__(self, cap):
+        self.head = 0
+        self.tail = 0
+        self.count = 0
+        self.__cap = cap
+        self.elements = [0 for _ in range(cap)]
+
+    def enqueu(self,value):
+        if len(self) >= len(self.elements):
+            raise IndexError
+        if len(self) == 0:
+            self.elements[self.head] = value
+            self.tail = 1
+        else:
+            self.tail = (self.tail + 1) % self.__cap
+            self.elements[self.tail] = value
+        self.count +=1
+
+    def dequeue(self):
+        if self.count ==0:
+            return None
+
+        self.count -=1
+        temp = self.elements[self.head]
+        self.head = (self.head +1) % self.__cap
+        return temp
+
+    def __len__(self):
+        return self.count
+```
