@@ -357,3 +357,386 @@ class Queue:
     def __len__(self):
         return self.count
 ```
+
+=== DeQue
+
+A `DeQue` is a double ended queue.
+
+```py
+from typing import Optional
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.prev: Optional[Node] = None
+        self.next: Optional[Node] = None
+    def __str__(self) -> str:
+        return str(self.value)
+class DeQue:
+    def __init__(self):
+        self.head = Node(0)
+        self.tail = Node(0)
+        self.count = 0
+
+    def __len__(self):
+        return self.count
+    
+    def enqueue(self,value):
+        newNode = Node(value)
+        if self.count == 0:
+            self.head = self.tail = newNode
+        else:
+            temp = self.tail
+            self.tail.next = newNode
+            self.tail = newNode
+            self.tail.prev = temp
+        self.count+=1
+
+    def enqueuRight(self,value):
+        newNode = Node(value)
+        if self.count == 0:
+            self.head = self.tail = newNode
+        else:
+            temp = self.head
+            self.head.prev = newNode
+            self.head = newNode
+            self.head.next = temp
+        self.count+=1
+
+    def dequeue(self):
+        if self.count == 0:
+            return None
+        if self.count == 1:
+            temp = self.head
+            self.head = Node(0)
+            self.tail = Node(0) 
+            self.count = 0
+            return temp
+
+        temp = self.head
+        self.head = temp.next
+        self.count -=1
+        return temp
+    def dequeueLeft(self):
+        if self.count == 0:
+            return None
+        if self.count == 1:
+            temp = self.head
+            self.head = Node(0)
+            self.tail = Node(0)
+            self.count = 0
+            return temp
+        
+        temp = self.tail
+        self.tail = temp.prev
+        self.count -=1
+        return temp
+```
+
+=== Min-Heap
+
+```py
+import math
+class MinHeap:
+    def __init__(self) -> None:
+        self.data = []
+        self.len = 0
+
+    def insert(self,value):
+        if self.len == 0:
+            self.data.append(value)
+            self.len +=1
+        else:
+            self.data.append(value)
+            self.__heapify_up(self.len)
+            self.len +=1
+
+    def pop(self):
+        if self.len == 0:
+            raise IndexError
+        if self.len == 1:
+            self.len = 0
+            return self.data[0]
+        out = self.data[0]
+        self.len -=1
+        self.data[0] = self.data[self.len]
+        self.__heapify_down(0)
+        return out
+
+    def __heapify_down(self,idx):
+        left_idx = self.__get_left_child(idx)
+        right_idx = self.__get_right_child(idx)
+
+        if idx == self.len or left_idx >= self.len:
+            return
+
+        left_val = self.data[left_idx]
+        right_val = self.data[right_idx]
+        value = self.data[idx]
+
+        if left_val <= right_val and value > left_val:
+            self.data[idx] = left_val
+            self.data[left_idx] = value
+            self.__heapify_down(left_idx)
+        elif right_val <= left_val and value > right_val:
+            self.data[idx] = right_val 
+            self.data[right_idx] = value
+            self.__heapify_down(right_idx)
+
+    def __heapify_up(self,idx):
+        if idx == 0:
+            return
+        parent_idx = self.__get_parent(idx)
+        parent_value = self.data[parent_idx]
+        value = self.data[idx]
+
+        if value < parent_value:
+            self.data[parent_idx] = value
+            self.data[idx] = parent_value
+            self.__heapify_up(parent_idx)
+
+    def __get_parent(self,idx):
+        return math.floor((idx -1) /2)
+    def __get_left_child(self,idx):
+        return idx *2 + 1
+    def __get_right_child(self,idx):
+        return idx *2 + 2
+```
+
+=== Max-Heap
+
+```py
+import math
+class MaxHeap:
+    def __init__(self) -> None:
+        self.data = []
+        self.len = 0
+
+    def insert(self,value):
+        if self.len == 0:
+            self.data.append(value)
+            self.len +=1
+        else:
+            self.data.append(value)
+            self.__heapify_up(self.len)
+            self.len +=1
+
+    def pop(self):
+        if self.len == 0:
+            raise IndexError
+        elif self.len == 1:
+            self.len = 0
+            return self.data[0]
+        out = self.data[0]
+        self.len -=1
+        self.data[0] = self.data[self.len]
+        self.__heapify_down(0)
+        return out
+
+    def __heapify_up(self,idx):
+        if idx == 0:
+            return
+        idx_parent = self.__get_parent(idx)
+        value = self.data[idx]
+        value_parent = self.data[idx_parent]
+
+        if value > value_parent:
+            self.data[idx_parent] = value
+            self.data[idx] = value_parent
+            self.__heapify_up(idx_parent)
+
+    def __heapify_down(self,idx):
+        left_idx = self.__get_child_left(idx)
+        right_idx = self.__get_child_right(idx)
+
+        if idx >= self.len or left_idx >= self.len:
+            return
+        
+        value_left = self.data[left_idx]
+        value_right = self.data[right_idx]
+        value = self.data[idx]
+
+        if value_left >= value_right and value_left > value:
+            self.data[idx] = value_left
+            self.data[left_idx] = value
+            self.__heapify_down(left_idx)
+        elif value_right > value_left and value_right > value:
+            self.data[idx] = value_right
+            self.data[right_idx] = value
+            self.__heapify_down(right_idx)
+
+    
+    def __get_parent(self,idx):
+        return math.floor((idx -1) /2)
+    def __get_child_left(self,idx):
+        return idx * 2 + 1
+    def __get_child_right(self,idx):
+        return idx * 2 + 2
+```
+
+== Tree traversal (DFS)
+
+```py
+class Node:
+    def __init__(self,value) -> None:
+        self.left = None
+        self.right = None
+        self.value = value
+
+def pre_order_traversal(node):
+    print(node.value)
+    if node.left is not None:
+        pre_order_traversal(node.left)
+    if node.right is not None:
+        pre_order_traversal(node.right)
+
+def in_order_traversal(node):
+    if node.left is not None:
+        in_order_traversal(node.left)
+    print(node.value)
+    if node.right is not None:
+        in_order_traversal(node.right)
+
+def post_order_traversal(node):
+    if node.left is not None:
+        post_order_traversal(node.left)
+    if node.right is not None:
+        post_order_traversal(node.right)
+    print(node.value)
+
+
+root = Node(5)
+root.left = Node(3)
+root.right = Node(8)
+root.left.left = Node(1)
+root.left.right = Node(4)
+root.right.left = Node(7)
+root.right.right = Node(9)
+
+# Sample binary tree structure:
+#
+#         5
+#       /   \
+#      3     8
+#     / \   / \
+#    1   4 7   9
+print("pre order:")
+pre_order_traversal(root)
+print()
+print("in order:")
+in_order_traversal(root)
+print()
+print("post order:")
+post_order_traversal(root)
+
+#pre order:
+#5
+#3
+#1
+#4
+#8
+#7
+#9
+#
+#in order:
+#1
+#3
+#4
+#5
+#7
+#8
+#9
+#
+#post order:
+#1
+#4
+#3
+#7
+#9
+#8
+#5
+```
+
+=== Breadth first search / Level traversal
+
+```py
+from collections import deque 
+
+class Node:
+    def __init__(self, value) -> None:
+        self.value = value
+        self.left = None
+        self.right = None
+
+def breadth_first_search(node):
+    queue = deque([node])
+    while len(queue) != 0:
+        curr = queue.popleft()
+        if curr.left is not None:
+            queue.append(curr.left)
+        if curr.right is not None:
+            queue.append(curr.right)
+        print(curr.value)
+
+```
+
+== Sorts
+
+=== Merge-Sort
+
+```py
+def merge_sort(lst):
+    #Base case
+    if len(lst) <= 1:
+        return lst
+    mid = len(lst) // 2
+    #Recursion
+    left = merge_sort(lst[:mid])
+    right = merge_sort(lst[mid:])
+    return  merge(left,right)
+
+def merge(left,right):
+    temp = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            temp.append(left[i])
+            i += 1
+        else:
+            temp.append(right[j])
+            j += 1
+    # append any remaining elements
+    temp.extend(left[i:])
+    temp.extend(right[j:])
+    return temp
+```
+
+=== Quick-Sort
+
+```py
+def qs(lst,lo,high):
+    if lo >= high:
+        return;
+    pivotIdx = partition(lst,lo,high)
+
+    qs(lst,lo,pivotIdx-1)
+    qs(lst,pivotIdx+ 1,high)
+
+def partition(lst,low,high) -> int:
+    pivot = lst[high]
+    idx = low -1
+    i = low
+    while i < high:
+        if lst[i] <= pivot:
+            idx +=1;
+            temp = lst[idx]
+            lst[idx] = lst[i] 
+            lst[i] = temp
+        i+=1
+    idx +=1
+    lst[high] = lst[idx]
+    lst[idx] = pivot
+    return idx
+
+def quick_sort(lst):
+    qs(lst,0,len(lst)- 1)
+```
