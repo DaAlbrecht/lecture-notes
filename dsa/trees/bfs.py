@@ -16,6 +16,24 @@ def breadth_first_search(node):
             queue.append(curr.right)
         print(curr.value)
 
+def get_keys_at_level(node, level):
+    result = []                       
+    
+    queue = deque([(node, 0)])     
+    
+    while queue:                         
+        node, current_level = queue.popleft()
+        
+        if current_level == level:     
+            result.append(node.value)     
+        current_level +=1
+        if node.left:                    
+            queue.append((node.left, current_level))
+        
+        if node.right:                   
+            queue.append((node.right, current_level))
+    print(result) 
+
 # Sample binary tree structure:
 #
 #         5
@@ -32,4 +50,5 @@ root.left.right = Node(4)
 root.right.left = Node(7)
 root.right.right = Node(9)
 
-breadth_first_search(root)
+#breadth_first_search(root)
+get_keys_at_level(root,2)
