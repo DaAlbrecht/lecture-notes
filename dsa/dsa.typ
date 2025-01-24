@@ -573,6 +573,66 @@ class MaxHeap:
         return idx * 2 + 2
 ```
 
+=== Binary search tree
+
+```py
+class Bst:
+    def __init__(self, value=None, parent=None):
+        self.value = value
+        self.parent = parent
+        self.left = None
+        self.right = None
+    def __str__(self) -> str:
+        return str(self.value)
+
+    def insert(self, value):
+        if self.value is None:
+            self.value = value
+            return
+
+        if value < self.value:
+            if self.left is None:
+                self.left = Bst(value, self)
+            else:
+                self.left.insert(value)
+        elif value > self.value:
+            if self.right is None:
+                self.right = Bst(value, self)
+            else:
+                self.right.insert(value)
+
+    def search(self, node, target):
+        if node is None:
+            return None 
+        elif node.value == target:
+            return node
+        elif target < node.value:
+            return self.search(node.left, target)
+        else:
+            return self.search(node.right, target)
+
+
+def in_order_traversal(node):
+    if node.left is not None:
+        in_order_traversal(node.left)
+    print(node.value)
+    if node.right is not None:
+        in_order_traversal(node.right)
+
+foo = Bst(200)
+foo.insert(32)
+foo.insert(94)
+foo.insert(12)
+foo.insert(22)
+foo.insert(23)
+foo.insert(40)
+foo.insert(40)
+foo.insert(30)
+print("found:", foo.search(foo,30))
+print("in order traversal prints a bst in order")
+in_order_traversal(foo)
+```
+
 == Tree traversal (DFS)
 
 ```py
@@ -678,6 +738,251 @@ def breadth_first_search(node):
         print(curr.value)
 
 ```
+=== Red Black Tree
+
+by: https://www.geeksforgeeks.org/red-black-tree-in-python/
+```py
+# class to implement node of RB Tree
+class RBNode:
+        # cnostructor
+    def __init__(self, value, color='red'):
+        self.value = value
+        self.color = color
+        self.left = None
+        self.right = None
+        self.parent = None
+
+    # function to get the grandparent of node
+    def grandparent(self):
+        if self.parent is None:
+            return None
+        return self.parent.parent
+
+    # function to get the sibling of node
+    def sibling(self):
+        if self.parent is None:
+            return None
+        if self == self.parent.left:
+            return self.parent.right
+        return self.parent.left
+
+    # function to get the uncle of node
+    def uncle(self):
+        if self.parent is None:
+            return None
+        return self.parent.sibling()
+
+# function to implement Red Black Tree
+
+
+class RedBlackTree:
+        # constructor to initialize the RB tree
+    def __init__(self):
+        self.root = None
+
+    # function to search a value in RB Tree
+    def search(self, value):
+        curr_node = self.root
+        while curr_node is not None:
+            if value == curr_node.value:
+                return curr_node
+            elif value < curr_node.value:
+                curr_node = curr_node.left
+            else:
+                curr_node = curr_node.right
+        return None
+
+    # function to insert a node in RB Tree, similar to BST insertion
+    def insert(self, value):
+        # Regular insertion
+        new_node = RBNode(value)
+        if self.root is None:
+            self.root = new_node
+        else:
+            curr_node = self.root
+            while True:
+                if value < curr_node.value:
+                    if curr_node.left is None:
+                        curr_node.left = new_node
+                        new_node.parent = curr_node
+                        break
+                    else:
+                        curr_node = curr_node.left
+                else:
+                    if curr_node.right is None:
+                        curr_node.right = new_node
+                        new_node.parent = curr_node
+                        break
+                    else:
+                        curr_node = curr_node.right
+        self.insert_fix(new_node)
+
+    # Function to fix RB tree properties after insertion
+    def insert_fix(self, new_node):
+        while new_node.parent and new_node.parent.color == 'red':
+            if new_node.parent == new_node.grandparent().left:
+                uncle = new_node.uncle()
+                if uncle and uncle.color == 'red':
+                    new_node.parent.color = 'black'
+                    uncle.color = 'black'
+                    new_node.grandparent().color = 'red'
+                    new_node = new_node.grandparent()
+                else:
+                    if new_node == new_node.parent.right:
+                        new_node = new_node.parent
+                        self.rotate_left(new_node)
+                    new_node.parent.color = 'black'
+                    new_node.grandparent().color = 'red'
+                    self.rotate_right(new_node.grandparent())
+            else:
+                uncle = new_node.uncle()
+                if uncle and uncle.color == 'red':
+                    new_node.parent.color = 'black'
+                    uncle.color = 'black'
+                    new_node.grandparent().color = 'red'
+                    new_node = new_node.grandparent()
+                else:
+                    if new_node == new_node.parent.left:
+                        new_node = new_node.parent
+                        self.rotate_right(new_node)
+                    new_node.parent.color = 'black'
+                    new_node.grandparent().color = 'red'
+                    self.rotate_left(new_node.grandparent())
+        self.root.color = 'black'
+
+    # function to delete a value from RB Tree
+    def delete(self, value):
+        node_to_remove = self.search(value)
+
+        if node_to_remove is None:
+            return
+
+        if node_to_remove.left is None or node_to_remove.right is None:
+            self._replace_node(
+                node_to_remove, node_to_remove.left or node_to_remove.right)
+        else:
+            successor = self._find_min(node_to_remove.right)
+            node_to_remove.value = successor.value
+            self._replace_node(successor, successor.right)
+
+        self.delete_fix(node_to_remove)
+
+    # function to fix RB Tree properties after deletion
+    def delete_fix(self, x):
+        while x != self.root and x.color == 'black':
+            if x == x.parent.left:
+                sibling = x.sibling()
+                if sibling.color == 'red':
+                    sibling.color = 'black'
+                    x.parent.color = 'red'
+                    self.rotate_left(x.parent)
+                    sibling = x.sibling()
+                if (sibling.left is None or sibling.left.color == 'black') and (sibling.right is None or sibling.right.color == 'black'):
+                    sibling.color = 'red'
+                    x = x.parent
+                else:
+                    if sibling.right is None or sibling.right.color == 'black':
+                        sibling.left.color = 'black'
+                        sibling.color = 'red'
+                        self.rotate_right(sibling)
+                        sibling = x.sibling()
+                    sibling.color = x.parent.color
+                    x.parent.color = 'black'
+                    if sibling.right:
+                        sibling.right.color = 'black'
+                    self.rotate_left(x.parent)
+                    x = self.root
+            else:
+                sibling = x.sibling()
+                if sibling.color == 'red':
+                    sibling.color = 'black'
+                    x.parent.color = 'red'
+                    self.rotate_right(x.parent)
+                    sibling = x.sibling()
+                if (sibling.left is None or sibling.left.color == 'black') and (sibling.right is None or sibling.right.color == 'black'):
+                    sibling.color = 'red'
+                    x = x.parent
+                else:
+                    if sibling.left is None or sibling.left.color == 'black':
+                        sibling.right.color = 'black'
+                        sibling.color = 'red'
+                        self.rotate_left(sibling)
+                        sibling = x.sibling()
+                    sibling.color = x.parent.color
+                    x.parent.color = 'black'
+                    if sibling.left:
+                        sibling.left.color = 'black'
+                    self.rotate_right(x.parent)
+                    x = self.root
+        x.color = 'black'
+
+    # Function for left rotation of RB Tree
+    def rotate_left(self, node):
+        right_child = node.right
+        node.right = right_child.left
+
+        if right_child.left is not None:
+            right_child.left.parent = node
+
+        right_child.parent = node.parent
+
+        if node.parent is None:
+            self.root = right_child
+        elif node == node.parent.left:
+            node.parent.left = right_child
+        else:
+            node.parent.right = right_child
+
+        right_child.left = node
+        node.parent = right_child
+
+    # function for right rotation of RB Tree
+    def rotate_right(self, node):
+        left_child = node.left
+        node.left = left_child.right
+
+        if left_child.right is not None:
+            left_child.right.parent = node
+
+        left_child.parent = node.parent
+
+        if node.parent is None:
+            self.root = left_child
+        elif node == node.parent.right:
+            node.parent.right = left_child
+        else:
+            node.parent.left = left_child
+
+        left_child.right = node
+        node.parent = left_child
+
+    # function to replace an old node with a new node
+    def _replace_node(self, old_node, new_node):
+        if old_node.parent is None:
+            self.root = new_node
+        else:
+            if old_node == old_node.parent.left:
+                old_node.parent.left = new_node
+            else:
+                old_node.parent.right = new_node
+        if new_node is not None:
+            new_node.parent = old_node.parent
+
+    # function to find node with minimum value in a subtree
+    def _find_min(self, node):
+        while node.left is not None:
+            node = node.left
+        return node
+
+    # function to perform inorder traversal
+    def _inorder_traversal(self, node):
+        if node is not None:
+            self._inorder_traversal(node.left)
+            print(node.value, end=" ")
+            self._inorder_traversal(node.right)
+
+
+```
 
 == Sorts
 
@@ -739,4 +1044,98 @@ def partition(lst,low,high) -> int:
 
 def quick_sort(lst):
     qs(lst,0,len(lst)- 1)
+```
+
+=== Insert sort
+```py
+def insert_sort(lst):
+    if lst is None or len(lst) <=1:
+        return lst
+    for i in range(1, len(lst)):
+      j = i  
+      while j > 0 and lst[j] < lst[j - 1]:
+          lst[j], lst[j - 1] = lst[j - 1], lst[j]  # Swap elements
+          j -= 1
+```
+
+== Hashing
+
+=== HashTable linear probing
+
+```py
+class HashMap:
+    def __init__(self, cap=100):
+        self.size = 0
+        self.data = [None for _ in range(cap)]
+        self.TOMBSTONE = object()
+
+    def insert(self,value):
+        if self.size >= len(self.data):
+            raise IndexError
+
+        idx = self.__hash_function(value)
+        if self.data[idx] is None or self.data[idx] == object():
+            self.size +=1
+            self.data[idx] = value
+            return
+
+        while self.data[idx] is not None and self.data[idx] is not self.TOMBSTONE:
+            # linear probing and wrap around
+            idx = (idx + 1) % len(self.data)
+            # Avoid inserting duplicates
+            if self.data[idx] == value: 
+                return  
+
+        self.size +=1
+        self.data[idx] = value
+
+    def remove(self,value):
+        idx = starting_idx = self.__hash_function(value)
+        if self.data[idx] == value:
+            out = self.data[idx]
+            self.data[idx] = self.TOMBSTONE
+            return out
+        while self.data[idx] != value:
+            idx = (idx + 1) % len(self.data)
+            if idx == starting_idx:
+                return None
+        self.data[idx] = self.TOMBSTONE
+        
+    def __hash_function(self, value):
+        # Simple hash function: sum of character codes modulo the number of buckets
+        return sum(ord(char) for char in value) % len(self.data)
+```
+=== HashTable with chaining
+
+```py
+class HashMap:
+    def __init__(self, cap=100):
+        self.data = [[] for _ in range(cap)]
+
+    def insert(self,value):
+        idx = self.__hash_function(value)
+        lst = self.data[idx]
+        if not lst.__contains__(value):
+            lst.append(value)
+    def remove(self,value):
+        idx = self.__hash_function(value)
+        lst = self.data[idx]
+        if not lst.__contains__(value):
+            return
+        for item in lst:
+            if item == value:
+                lst.remove(item)
+    def get(self, value):
+        idx = self.__hash_function(value)
+        lst = self.data[idx]
+        if not lst.__contains__(value):
+            return
+        for item in lst:
+            if item == value:
+                return item
+        return
+
+    def __hash_function(self, value):
+        # Simple hash function: sum of character codes modulo the number of buckets
+        return sum(ord(char) for char in value) % len(self.data)
 ```
